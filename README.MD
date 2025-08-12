@@ -41,7 +41,7 @@ A powerful, real-time website monitoring system with Telegram alerts, dark mode,
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/UptimeMonitor.git
+git clone https://github.com/vazor-code/UptimeMonitor.git
 cd UptimeMonitor
 
 # 2. Create virtual environment
