@@ -58,6 +58,7 @@ cp .env.example .env
 
 # 5. Run the app
 python app.py
+```
 
 ## 📬 Feedback
 Found a bug? Want a feature?
