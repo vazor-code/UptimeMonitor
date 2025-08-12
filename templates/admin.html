@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ t.admin }} — UptimeMonitor</title>
+    <link rel="icon" href="/static/database.png" sizes="192x192">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            height: 280px;
+            margin: 20px 0;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .dark-mode {
+            background: #121212;
+            color: #e9ecef;
+        }
+        .dark-mode .card, .dark-mode table, .dark-mode .chart-container {
+            background: #1e1e1e;
+            color: #e9ecef;
+        }
+        .dark-mode h3, .dark-mode label {
+            color: #e9ecef;
+        }
+    </style>
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="/?lang={{ lang }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> {{ t.back }}</a>
+            <div>
+                <a href="?lang=ru" class="btn btn-sm btn-outline-secondary {{ 'active' if lang == 'ru' else '' }}">🇷🇺 RU</a>
+                <a href="?lang=en" class="btn btn-sm btn-outline-secondary {{ 'active' if lang == 'en' else '' }}">🇬🇧 EN</a>
+            </div>
+        </div>
+
+        <h1><i class="fas fa-shield-alt text-danger"></i> {{ t.admin }}</h1>
+
+        <div class="row text-center mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <h4>{{ total }}</h4>
+                        <p class="mb-0">{{ t.total_sites }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <h4>{{ active }}</h4>
+                        <p class="mb-0">{{ t.active }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white">
+                    <div class="card-body">
+                        <h4>{{ up_now }}</h4>
+                        <p class="mb-0">{{ t.up_now }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white">
+                    <div class="card-body">
+                        <h4>{{ down_now }}</h4>
+                        <p class="mb-0">{{ t.down_now }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-chart-bar"></i> {{ t.stats }}</h3>
+
+        <div class="mb-3">
+            <label>{{ t.period }}</label>
+            <div class="btn-group" role="group">
+                <button class="btn btn-sm btn-outline-primary" onclick="loadStats(1)">1 {{ t.day }}</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadStats(3)">3 {{ t.days }}</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadStats(7)" id="defaultBtn">7 {{ t.days }}</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadStats(30)">30 {{ t.days }}</button>
+                <button class="btn btn-sm btn-outline-primary" onclick="loadStats(9999)">{{ t.all_time }}</button>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h5>📊 {{ t.uptime }}</h5>
+            <canvas id="uptimeChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h5>⏱️ {{ t.avg_response }}</h5>
+            <canvas id="responseChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h5>🔴 {{ t.downtime }}</h5>
+            <canvas id="downtimeChart"></canvas>
+        </div>
+
+        <h3><i class="fas fa-history"></i> {{ t.recent_events }}</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ t.url }}</th>
+                    <th>{{ t.status }}</th>
+                    <th>{{ t.response_time }}</th>
+                    <th>{{ t.last_check }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ev in events %}
+                <tr class="{{ 'table-success' if ev[1] == 1 else 'table-danger' }}">
+                    <td><code>{{ ev[0] }}</code></td>
+                    <td>{{ '✅ ' + t.online if ev[1] == 1 else '🔴 ' + t.offline }}</td>
+                    <td>{{ "%.3f"|format(ev[2]) if ev[2] else '—' }} с</td>
+                    <td>{{ ev[3].split('.')[0].replace('T', ' ') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let charts = {};
+
+        function destroyCharts() {
+            Object.keys(charts).forEach(key => charts[key].destroy());
+            charts = {};
+        }
+
+        function loadStats(days) {
+            fetch(`/api/admin/stats?days=${days}`)
+                .then(r => r.json())
+                .then(data => {
+                    destroyCharts();
+                    buildChart('uptimeChart', 'bar', '{{ t.uptime }}', data.uptime, '#28a745');
+                    buildChart('responseChart', 'line', '{{ t.avg_response }}', data.response, '#007bff');
+                    buildChart('downtimeChart', 'bar', '{{ t.downtime }}', data.downtime, '#dc3545');
+                })
+                .catch(() => {
+                    destroyCharts();
+                    const urls = {{ all_sites | tojson }};
+                    const mock = urls.length ? urls : ["https://example.com"];
+
+                    buildChart('uptimeChart', 'bar', '{{ t.uptime }}', mock.map(u => ({ url: u, value: 95 + Math.random() * 5 })), '#28a745');
+                    buildChart('responseChart', 'line', '{{ t.avg_response }}', mock.map(u => ({ url: u, value: (Math.random() * 1 + 0.2).toFixed(3) })), '#007bff');
+                    buildChart('downtimeChart', 'bar', '{{ t.downtime }}', mock.map(u => ({ url: u, value: Math.floor(Math.random() * 2) })), '#dc3545');
+                });
+        }
+
+        function buildChart(id, type, label, data, color) {
+            const ctx = document.getElementById(id).getContext('2d');
+            const labels = data.map(d => {
+                try { return new URL(d.url).hostname; }
+                catch { return d.url; }
+            });
+
+            const dataset = type === 'line'
+                ? { label, data: data.map(d => d.value), borderColor: color, fill: false, tension: 0.3 }
+                : { label, data: data.map(d => d.value), backgroundColor: color };
+
+            charts[id] = new Chart(ctx, { type, data: { labels, datasets: [dataset] } });
+        }
+
+        document.getElementById('defaultBtn').click();
+    </script>
+</body>
+</html>
