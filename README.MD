@@ -1,4 +1,4 @@
-# <a id="uptimemonitor-pro-en"></a> � UptimeMonitor Pro (EN)
+# <a id="uptimemonitor-pro-en"></a> 🚀 UptimeMonitor Pro (EN)
 
 [Русская версия →](#uptimemonitor-pro-ru)
 
