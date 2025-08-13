@@ -1,4 +1,7 @@
-# 🚀 UptimeMonitor Pro
+![Logo](screenshots/logo.png)
+# <a id="uptimemonitor-pro-en"></a> 🚀 UptimeMonitor Pro (EN)
+
+[Русская версия →](#uptimemonitor-pro-ru)
 
 A powerful, real-time website monitoring system with Telegram alerts, dark mode, and multi-language support.
 
@@ -41,28 +44,139 @@ A powerful, real-time website monitoring system with Telegram alerts, dark mode,
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/UptimeMonitor.git
+git clone https://github.com/vazor-code/UptimeMonitor.git
 cd UptimeMonitor
 
 # 2. Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# or venv\Scripts\activate  # Windows
+
+# For Windows:
+venv\Scripts\activate
+
+# For Linux/Mac:
+source venv/bin/activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
-# 4. Create .env from example
-cp .env.example .env
-# Open .env and put your values
+# 4. Create .env file
+# For Windows:
+copy .env.example .env
 
-# 5. Run the app
+# For Linux/Mac:
+# cp .env.example .env
+
+# 5. Edit .env
+# Open .env in Notepad or any editor
+TELEGRAM_TOKEN=your_token
+TELEGRAM_CHAT_ID=your_chat_id
+
+# How to get chat_id:
+# 1. Start bot @BotFather and get token
+# 2. Start your bot
+# 3. Open: https://api.telegram.org/bot<TOKEN>/getUpdates
+# 4. Send a message to your bot
+# 5. Refresh the page — find "chat" → "id"
+
+# 6. Run the app
 python app.py
+🌐 Open: http://localhost:5000
+```
 
 ## 📬 Feedback
 Found a bug? Want a feature?
 Open an issue or contact me: scoutboy0202@gmail.com
 
-## 🎉 Credits
-Made with ❤️ by vazor
+---
+
+# <a id="uptimemonitor-pro-ru"></a>🚀 UptimeMonitor Pro (RU)
+
+[English version →](#uptimemonitor-pro-en)
+
+Мощная система мониторинга сайтов в реальном времени с Telegram-оповещениями, темной темой и поддержкой нескольких языков.
+
+![Flask](https://img.shields.io/badge/Flask-3.0.3-green)
+![Python](https://img.shields.io/badge/Python-3.10+-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+🌍 **Языки:** RU / EN  
+🔔 **Telegram-оповещения при падении**  
+📊 **Графики и статистика в админке**  
+🌙 **Темная/Светлая тема (сохраняется)**  
+🌐 **Работает в ограниченных регионах (Mobile-ready)**
+
+---
+
+## 📸 Скриншоты
+
+### Дашборд (Светлая тема)
+![Dashboard Light](screenshots/dashboard-light.png)
+
+### Дашборд (Темная тема)
+![Dashboard Dark](screenshots/dashboard-dark.png)
+
+---
+
+## 🔧 Возможности
+
+- ✅ Обновления в реальном времени (SSE)
+- ✅ Уведомления в Telegram при проблемах
+- ✅ Контроль срока SSL-сертификатов
+- ✅ Двуязычный интерфейс (Русский/Английский)
+- ✅ Темная и светлая темы (сохраняются)
+- ✅ Админка с графиками uptime
+- ✅ Автоопределение языка браузера
+- ✅ Поддержка IPv6 и HTTPS
+
+---
+
+## 📦 Установка
+
+```bash
+# 1. Клонируем репозиторий
+git clone https://github.com/vazor-code/UptimeMonitor.git
+cd UptimeMonitor
+
+# 2. Создаем виртуальное окружение
+python -m venv venv
+
+# Для Windows:
+venv\Scripts\activate
+
+# Для Linux/MacOS:
+source venv/bin/activate
+
+# 3. Устанавливаем зависимости
+pip install -r requirements.txt
+
+# 4. Создаем .env файл
+# Для Windows:
+copy .env.example .env
+
+# Для Linux/MacOS:
+# cp .env.example .env
+
+# 5. Редактируем .env
+# Открываем .env в любом редакторе
+TELEGRAM_TOKEN=ваш_токен
+TELEGRAM_CHAT_ID=ваш_chat_id
+
+# Как получить chat_id:
+# 1. Создайте бота через @BotFather и получите токен
+# 2. Запустите своего бота
+# 3. Откройте: https://api.telegram.org/bot<TOKEN>/getUpdates
+# 4. Отправьте сообщение боту
+# 5. Обновите страницу — найдите "chat" → "id"
+
+# 6. Запускаем приложение
+python app.py
+🌐 Открываем: http://localhost:5000
+```
+
+## 📬 Обратная связь
+Нашли баг? Хотите новую функцию?
+Создайте issue или напишите мне: scoutboy0202@gmail.com
+
+## 🎉 Автор
+Сделано с ❤️ от vazor
 2025 · MIT License
