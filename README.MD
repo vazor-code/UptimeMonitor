@@ -53,7 +53,7 @@ python -m venv venv
 venv\Scripts\activate
 
 # For Linux/Mac:
-# source venv/bin/activate
+source venv/bin/activate
 
 # 3. Install dependencies
 pip install -r requirements.txt
@@ -143,7 +143,7 @@ python -m venv venv
 venv\Scripts\activate
 
 # Для Linux/MacOS:
-# source venv/bin/activate
+source venv/bin/activate
 
 # 3. Устанавливаем зависимости
 pip install -r requirements.txt
