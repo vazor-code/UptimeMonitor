@@ -91,6 +91,9 @@ Found a bug? Want a feature?
 Open an issue or contact me: scoutboy0202@gmail.com
 
 ---
+<p align="center">
+  <img src="screenshots/logo.png" alt="UptimeMonitor Logo" width="800">
+</p>
 
 # <a id="uptimemonitor-pro-ru"></a>🚀 UptimeMonitor Pro (RU)
 
