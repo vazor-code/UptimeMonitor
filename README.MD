@@ -57,14 +57,12 @@ cp .env.example .env
 # Open .env and put your values
 
 #.env
-```
 TELEGRAM_TOKEN=your_token
 TELEGRAM_CHAT_ID=your_chat_id
 
 # Press START button to start the bot and open:
 # https://api.telegram.org/bot<TOKEN>/getUpdates
 # Then find "chat" and after "id"
-```
 
 # 5. Run the app
 python app.py
