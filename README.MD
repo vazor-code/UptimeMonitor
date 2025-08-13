@@ -53,7 +53,11 @@ source venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 
 # 4. Create .env from example
+# For Linux/Mac:
 cp .env.example .env
+
+# For Windows:
+copy .env.example .env
 # Open .env and put your values
 
 #.env
