@@ -1,4 +1,6 @@
-![Logo](screenshots/logo.png)
+<p align="center">
+  <img src="screenshots/logo.png" alt="UptimeMonitor Logo" width="300">
+</p>
 # <a id="uptimemonitor-pro-en"></a> 🚀 UptimeMonitor Pro (EN)
 
 [Русская версия →](#uptimemonitor-pro-ru)
