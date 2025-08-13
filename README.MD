@@ -1,4 +1,6 @@
-# 🚀 UptimeMonitor Pro
+# � UptimeMonitor Pro (EN)
+
+[Русская версия →](#uptimemonitor-pro-ru)
 
 A powerful, real-time website monitoring system with Telegram alerts, dark mode, and multi-language support.
 
@@ -11,12 +13,6 @@ A powerful, real-time website monitoring system with Telegram alerts, dark mode,
 📊 **Live charts & admin stats**  
 🌙 **Dark/Light mode (saved)**  
 🌐 **Works in restricted regions (Mobile-ready)**
-
----
-
-## 🧭 Navigation
-- [English Version](#-uptime-monitor-pro)
-- [Русская версия](#-uptime-monitor-pro-1)
 
 ---
 
@@ -85,15 +81,16 @@ TELEGRAM_CHAT_ID=your_chat_id
 python app.py
 🌐 Open: http://localhost:5000
 ```
+
 ## 📬 Feedback
 Found a bug? Want a feature?
 Open an issue or contact me: scoutboy0202@gmail.com
 
-## 🎉 Credits
-Made with ❤️ by vazor
-2025 · MIT License
+---
 
-# 🚀 UptimeMonitor Pro
+# <a id="uptimemonitor-pro-ru"></a>🚀 UptimeMonitor Pro (RU)
+
+[English version →](#uptimemonitor-pro-en)
 
 Мощная система мониторинга сайтов в реальном времени с Telegram-оповещениями, темной темой и поддержкой нескольких языков.
 
@@ -106,12 +103,6 @@ Made with ❤️ by vazor
 📊 **Графики и статистика в админке**  
 🌙 **Темная/Светлая тема (сохраняется)**  
 🌐 **Работает в ограниченных регионах (Mobile-ready)**
-
----
-
-## 🧭 Навигация
-- [English Version](#-uptime-monitor-pro)
-- [Русская версия](#-uptime-monitor-pro-1)
 
 ---
 
