@@ -4,7 +4,7 @@
 
 <h1 align="center">🚀 UptimeMonitor Pro</h1>
 <p align="center">
-  <em>Real-time website monitoring with instant Telegram alerts</em>
+  <em>Real-time website monitoring with instant Telegram alerts. Version: 0.1</em>
 </p>
 
 <a id="uptimemonitor-pro-en"></a>
@@ -107,7 +107,7 @@ Open an issue or contact me: scoutboy0202@gmail.com
 
 <h1 align="center">🚀 UptimeMonitor Pro</h1>
 <p align="center">
-  <em>Мониторинг сайтов в реальном времени с мгновенными Telegram-оповещениями</em>
+  <em>Мониторинг сайтов в реальном времени с мгновенными Telegram-оповещениями. Версия: 0.1</em>
 </p>
 
 <a id="uptimemonitor-pro-ru"></a>
