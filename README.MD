@@ -1,8 +1,20 @@
 <p align="center">
-  <img src="screenshots/logo.png" alt="UptimeMonitor Logo" width="800">
+  <img src="screenshots/logo.png" width="600" alt="UptimeMonitor Pro">
 </p>
 
-# <a id="uptimemonitor-pro-en"></a> 🚀 UptimeMonitor Pro (EN)
+<h1 align="center">🚀 UptimeMonitor Pro</h1>
+<p align="center">
+  <em>Real-time website monitoring with instant Telegram alerts</em>
+</p>
+
+<p align="center">
+  <a href="https://github.com/vazor-code/UptimeMonitor/releases">
+    <img src="https://img.shields.io/github/v/release/vazor-code/UptimeMonitor?style=flat-square" alt="Release">
+  </a>
+  <a href="https://github.com/vazor-code/UptimeMonitor/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/vazor-code/UptimeMonitor/tests.yml?style=flat-square" alt="CI">
+  </a>
+</p>
 
 [Русская версия →](#uptimemonitor-pro-ru)
 
