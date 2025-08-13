@@ -7,6 +7,8 @@
   <em>Real-time website monitoring with instant Telegram alerts</em>
 </p>
 
+<a id="uptimemonitor-pro-en"></a>
+
 [Русская версия →](#uptimemonitor-pro-ru)
 
 A powerful, real-time website monitoring system with Telegram alerts, dark mode, and multi-language support.
@@ -102,6 +104,8 @@ Open an issue or contact me: scoutboy0202@gmail.com
 <p align="center">
   <em>Мониторинг сайтов в реальном времени с мгновенными Telegram-оповещениями</em>
 </p>
+
+<a id="uptimemonitor-pro-ru"></a>
 
 [English version →](#uptimemonitor-pro-en)
 
