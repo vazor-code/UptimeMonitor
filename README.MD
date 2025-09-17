@@ -99,7 +99,7 @@ python app.py
 ## 📬 Feedback
 Found a bug? Want a feature?  
 👉 [Open an issue](https://github.com/vazor-code/UptimeMonitor/issues)  
-💡 Want to contribute? Check out our [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.md) guide!
+💡 Want to contribute? Check out our [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.MD) guide!
 
 ---
 <p align="center">
@@ -203,7 +203,7 @@ python app.py
 ## 📬 Обратная связь
 Нашли баг? Хотите новую функцию?  
 👉 [Создайте issue](https://github.com/vazor-code/UptimeMonitor/issues)  
-💡 Хотите помочь проекту? Ознакомьтесь с нашим руководством: [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.md)
+💡 Хотите помочь проекту? Ознакомьтесь с нашим руководством: [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.MD)
 
 ## 🎉 Автор
 Сделано с ❤️ от vazor  
