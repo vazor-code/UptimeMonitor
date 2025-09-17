@@ -5,3 +5,5 @@ __pycache__/
 sites.db
 *.log
 backup_*.json
+.html
+.htm
