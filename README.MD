@@ -57,7 +57,7 @@ A powerful, real-time website monitoring system with Telegram alerts, dark mode,
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/vazor-code/UptimeMonitor.git
+git clone https://github.com/vazor-code/UptimeMonitor.git  
 cd UptimeMonitor
 
 # 2. Create virtual environment
@@ -97,8 +97,9 @@ python app.py
 ```
 
 ## 📬 Feedback
-Found a bug? Want a feature?
-Open an issue or contact me: scoutboy0202@gmail.com
+Found a bug? Want a feature?  
+👉 [Open an issue](https://github.com/vazor-code/UptimeMonitor/issues)  
+💡 Want to contribute? Check out our [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.md) guide!
 
 ---
 <p align="center">
@@ -160,7 +161,7 @@ Open an issue or contact me: scoutboy0202@gmail.com
 
 ```bash
 # 1. Клонируем репозиторий
-git clone https://github.com/vazor-code/UptimeMonitor.git
+git clone https://github.com/vazor-code/UptimeMonitor.git  
 cd UptimeMonitor
 
 # 2. Создаем виртуальное окружение
@@ -200,9 +201,13 @@ python app.py
 ```
 
 ## 📬 Обратная связь
-Нашли баг? Хотите новую функцию?
-Создайте issue или напишите мне: scoutboy0202@gmail.com
+Нашли баг? Хотите новую функцию?  
+👉 [Создайте issue](https://github.com/vazor-code/UptimeMonitor/issues)  
+💡 Хотите помочь проекту? Ознакомьтесь с нашим руководством: [CONTRIBUTING.md](https://github.com/vazor-code/UptimeMonitor/blob/main/CONTRIBUTING.md)
 
 ## 🎉 Автор
-Сделано с ❤️ от vazor
+Сделано с ❤️ от vazor  
 2025 · MIT License
+```
+
+---
