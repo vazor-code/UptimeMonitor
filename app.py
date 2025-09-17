@@ -20,6 +20,8 @@ TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 # Load translations from JSON files
+
+
 def load_translations():
     translations = {}
     for lang in ['ru', 'en']:
@@ -27,7 +29,9 @@ def load_translations():
             translations[lang] = json.load(f)
     return translations
 
+
 TRANSLATIONS = load_translations()
+
 
 @app.context_processor
 def inject_lang():
@@ -37,12 +41,16 @@ def inject_lang():
     return dict(t=t, lang=lang)
 
 # === Safe database connection (thread-safe) ===
+
+
 def get_db():
     conn = sqlite3.connect(DB_NAME, check_same_thread=False)
     conn.execute("PRAGMA journal_mode=WAL;")
     return conn
 
 # === Initialize the database ===
+
+
 def init_db():
     with get_db() as conn:
         conn.execute("""
@@ -66,6 +74,8 @@ def init_db():
         """)
 
 # === Check SSL certificate expiration ===
+
+
 def check_ssl_expiry(hostname, port=443):
     try:
         context = ssl.create_default_context()
@@ -73,13 +83,16 @@ def check_ssl_expiry(hostname, port=443):
             with context.wrap_socket(sock, server_hostname=hostname) as ssock:
                 cert = ssock.getpeercert()
                 expiry_str = cert['notAfter']
-                expiry_date = datetime.strptime(expiry_str, '%b %d %H:%M:%S %Y %Z')
+                expiry_date = datetime.strptime(
+                    expiry_str, '%b %d %H:%M:%S %Y %Z')
                 days_left = (expiry_date - datetime.utcnow()).days
                 return days_left, expiry_date.strftime('%Y-%m-%d')
     except Exception as e:
         return None, str(e)
 
 # === Check website status ===
+
+
 def check_site(site):
     site_id = site[0]
     url = site[1]
@@ -93,10 +106,12 @@ def check_site(site):
         if days_left is not None:
             ssl_info = f"SSL: expires {expiry} ({days_left} days left)"
             if days_left < 7:
-                send_telegram(f"⚠️ <b>SSL will expire soon!</b>\n\n🌐 <code>{url}</code>\n📅 Left: {days_left} days")
+                send_telegram(
+                    f"⚠️ <b>SSL will expire soon!</b>\n\n🌐 <code>{url}</code>\n📅 Left: {days_left} days")
 
     try:
-        r = requests.get(url, timeout=10, headers={'User-Agent': 'UptimeMonitor/1.0'})
+        r = requests.get(url, timeout=10, headers={
+                         'User-Agent': 'UptimeMonitor/1.0'})
         response_time = time.time() - start
         content_ok = True
         if expected_text and expected_text.strip():
@@ -151,6 +166,8 @@ def check_site(site):
     return status
 
 # === Send message to Telegram ===
+
+
 def send_telegram(message):
     try:
         # ✅ Removed extra spaces in URL!
@@ -170,12 +187,15 @@ def send_telegram(message):
         print(f"⚠️ Telegram error: {e}")
 
 # === Background polling loop ===
+
+
 def polling_loop():
     print("✅ Monitoring started...")
     while True:
         try:
             with get_db() as conn:
-                sites = conn.execute("SELECT id, url, check_interval, expected_text FROM sites WHERE enabled = 1").fetchall()
+                sites = conn.execute(
+                    "SELECT id, url, check_interval, expected_text FROM sites WHERE enabled = 1").fetchall()
             for site in sites:
                 check_site(site)
                 time.sleep(1)
@@ -184,11 +204,14 @@ def polling_loop():
             print(f"🚨 Error: {e}")
             time.sleep(10)
 
+
 def start_polling():
     thread = Thread(target=polling_loop, daemon=True)
     thread.start()
 
 # === Web routes ===
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -205,10 +228,10 @@ def index():
 
     with get_db() as conn:
         sites = conn.execute("""
-            SELECT 
+            SELECT
                 s.id, s.url, s.check_interval, s.expected_text, s.enabled,
                 l.status, l.response_time, l.timestamp,
-                (SELECT COUNT(*) FROM logs WHERE site_id = s.id AND status = 1) * 100.0 / 
+                (SELECT COUNT(*) FROM logs WHERE site_id = s.id AND status = 1) * 100.0 /
                 (SELECT COUNT(*) FROM logs WHERE site_id = s.id) AS uptime_percent
             FROM sites s
             LEFT JOIN logs l ON l.id = (
@@ -219,13 +242,17 @@ def index():
 
     return render_template("index.html", sites=sites)
 
+
 @app.route("/toggle/<int:site_id>")
 def toggle(site_id):
     with get_db() as conn:
-        site = conn.execute("SELECT enabled FROM sites WHERE id = ?", (site_id,)).fetchone()
+        site = conn.execute(
+            "SELECT enabled FROM sites WHERE id = ?", (site_id,)).fetchone()
         new_state = 0 if site[0] else 1
-        conn.execute("UPDATE sites SET enabled = ? WHERE id = ?", (new_state, site_id))
+        conn.execute("UPDATE sites SET enabled = ? WHERE id = ?",
+                     (new_state, site_id))
     return redirect(url_for("index"))
+
 
 @app.route("/delete/<int:site_id>")
 def delete(site_id):
@@ -233,6 +260,7 @@ def delete(site_id):
         conn.execute("DELETE FROM sites WHERE id = ?", (site_id,))
         conn.execute("DELETE FROM logs WHERE site_id = ?", (site_id,))
     return redirect(url_for("index"))
+
 
 @app.route("/api/logs/<int:site_id>")
 def api_logs(site_id):
@@ -245,9 +273,11 @@ def api_logs(site_id):
             ORDER BY timestamp
         """, (site_id, since.isoformat())).fetchall()
     return Response(json.dumps([
-        {"x": log[2].split(".")[0].replace("T", " "), "y": round(log[1], 3) if log[1] else None}
+        {"x": log[2].split(".")[0].replace("T", " "),
+         "y": round(log[1], 3) if log[1] else None}
         for log in logs
     ]), mimetype='application/json')
+
 
 @app.route("/stream")
 def stream():
@@ -274,12 +304,14 @@ def stream():
             time.sleep(5)
     return Response(event_stream(), mimetype="text/event-stream")
 
+
 @app.route("/admin")
 def admin():
     with get_db() as conn:
         # General statistics
         total = conn.execute("SELECT COUNT(*) FROM sites").fetchone()[0]
-        active = conn.execute("SELECT COUNT(*) FROM sites WHERE enabled = 1").fetchone()[0]
+        active = conn.execute(
+            "SELECT COUNT(*) FROM sites WHERE enabled = 1").fetchone()[0]
         up_now = conn.execute("""
             SELECT COUNT(*) FROM sites s
             JOIN logs l ON l.id = (SELECT id FROM logs WHERE site_id = s.id ORDER BY timestamp DESC LIMIT 1)
@@ -297,17 +329,20 @@ def admin():
         """).fetchall()
 
         # All sites (for test data)
-        all_sites = conn.execute("SELECT url FROM sites WHERE enabled = 1").fetchall()
-        all_sites = [s[0] for s in all_sites]  # ['https://google.com', 'https://yandex.ru', ...]
+        all_sites = conn.execute(
+            "SELECT url FROM sites WHERE enabled = 1").fetchall()
+        # ['https://google.com', 'https://yandex.ru', ...]
+        all_sites = [s[0] for s in all_sites]
 
-    return render_template("admin.html", 
-        total=total, 
-        active=active, 
-        down_now=down_now, 
-        up_now=up_now,
-        events=events,
-        all_sites=all_sites  # Pass to template
-    )
+    return render_template("admin.html",
+                           total=total,
+                           active=active,
+                           down_now=down_now,
+                           up_now=up_now,
+                           events=events,
+                           all_sites=all_sites  # Pass to template
+                           )
+
 
 @app.route("/api/downtime-stats")
 def downtime_stats():
@@ -333,6 +368,7 @@ def downtime_stats():
         result[d] = "down" if c["down"] > 0 else "slow" if c["slow"] > 0 else "up"
     return result
 
+
 @app.route("/api/admin/stats")
 def admin_stats():
     days = request.args.get("days", default=7, type=int)
@@ -341,7 +377,7 @@ def admin_stats():
 
     with get_db() as conn:
         uptime_data = conn.execute(f"""
-            SELECT 
+            SELECT
                 s.url,
                 (SUM(CASE WHEN l.status = 1 THEN 1 ELSE 0 END) * 100.0 / COUNT(l.id)) AS uptime
             FROM sites s
@@ -351,7 +387,7 @@ def admin_stats():
         """).fetchall()
 
         avg_response = conn.execute(f"""
-            SELECT 
+            SELECT
                 s.url,
                 AVG(l.response_time) AS avg_time
             FROM sites s
@@ -361,7 +397,7 @@ def admin_stats():
         """).fetchall()
 
         downtime_count = conn.execute(f"""
-            SELECT 
+            SELECT
                 s.url,
                 COUNT(*) AS down_count
             FROM sites s
@@ -375,6 +411,7 @@ def admin_stats():
         "response": [{"url": row[0], "value": round(row[1] or 0, 3)} for row in avg_response],
         "downtime": [{"url": row[0], "value": row[1]} for row in downtime_count]
     })
+
 
 # === Start the app ===
 if __name__ == "__main__":
